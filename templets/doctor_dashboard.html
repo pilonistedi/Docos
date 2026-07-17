@@ -1,0 +1,649 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Docos | Doctor Console</title>
+    <link href="/static/output.css" rel="stylesheet" />
+    <!-- FontAwesome Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+      integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
+  <body
+    class="bg-slate-900 min-h-screen flex flex-col text-slate-100 font-sans overflow-hidden"
+  >
+    <!-- Top Clinic Bar -->
+    <header
+      class="flex justify-between items-center px-6 py-3 bg-slate-950 border-b border-slate-800 relative z-10"
+    >
+      <div class="flex items-center gap-3">
+        <div
+          class="bg-blue-600 p-2 rounded-lg text-white flex items-center justify-center"
+        >
+          <i class="fa-solid fa-heart-pulse text-xl animate-pulse"></i>
+        </div>
+        <div>
+          <h1 class="font-black text-lg tracking-wider text-white">
+            DOCOS
+            <span
+              class="text-xs font-bold text-blue-500 uppercase tracking-widest ml-2"
+              >Clinic Engine</span
+            >
+          </h1>
+        </div>
+      </div>
+      <a href="doctor_profile.html">
+        <div class="flex items-center gap-4">
+          <div class="text-right">
+            <span class="block text-xs text-slate-400 font-medium"
+              >Logged in as</span
+            >
+            <span class="text-sm font-bold text-slate-200">Dr. Jane Smith</span>
+          </div>
+          <div
+            class="w-9 h-9 rounded-full bg-blue-600/20 border border-blue-500/50 flex items-center justify-center text-blue-400 font-bold text-sm"
+          >
+            JS
+          </div>
+        </div>
+      </a>
+    </header>
+
+    <!-- Main Workspace Split -->
+    <main class="flex-grow flex h-[calc(100vh-61px)] overflow-hidden">
+      <!-- ==================== COLUMN 1: PATIENT QUEUE (Left 20%) ==================== -->
+      <aside
+        class="w-1/5 bg-slate-950 border-r border-slate-800 p-4 flex flex-col justify-between"
+      >
+        <div class="space-y-4">
+          <div class="flex justify-between items-center">
+            <h3
+              class="text-xs font-bold text-slate-400 uppercase tracking-wider"
+            >
+              Today's Queue
+            </h3>
+            <span
+              class="text-[10px] font-bold px-2 py-0.5 bg-blue-500/10 text-blue-400 border border-blue-500/20 rounded-full"
+              >3 Waiting</span
+            >
+          </div>
+
+          <!-- Patient Search -->
+          <div class="relative">
+            <i
+              class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-xs text-slate-500"
+            ></i>
+            <input
+              type="text"
+              placeholder="Filter patients..."
+              class="w-full bg-slate-900 border border-slate-800 rounded-lg py-2 pl-8 pr-3 text-xs text-slate-200 focus:outline-none focus:border-blue-500 transition-all placeholder:text-slate-600"
+            />
+          </div>
+
+          <!-- Queue List -->
+          <div class="space-y-2 overflow-y-auto max-h-[calc(100vh-250px)]">
+            <!-- Patient 1 (Active) -->
+            <button
+              onclick="selectPatient('maxwell')"
+              id="q-maxwell"
+              class="w-full text-left p-3 rounded-xl border border-blue-500/30 bg-blue-500/5 transition-all flex items-center justify-between group cursor-pointer"
+            >
+              <div class="space-y-1">
+                <p
+                  class="text-xs font-bold text-white group-hover:text-blue-400 transition-colors"
+                >
+                  Maxwell K.
+                </p>
+                <p class="text-[10px] text-slate-400">
+                  9:30 AM Appt • Male, 28
+                </p>
+              </div>
+              <span
+                class="w-2 h-2 rounded-full bg-blue-500 animate-ping"
+              ></span>
+            </button>
+
+            <!-- Patient 2 -->
+            <button
+              onclick="selectPatient('sarah')"
+              id="q-sarah"
+              class="w-full text-left p-3 rounded-xl border border-slate-800 bg-slate-900/50 hover:border-slate-700 transition-all flex items-center justify-between group cursor-pointer"
+            >
+              <div class="space-y-1">
+                <p
+                  class="text-xs font-bold text-slate-300 group-hover:text-white transition-colors"
+                >
+                  Sarah Jenkins
+                </p>
+                <p class="text-[10px] text-slate-500">
+                  10:00 AM Appt • Female, 42
+                </p>
+              </div>
+              <span
+                class="text-[9px] font-bold text-amber-500 bg-amber-500/10 border border-amber-500/20 px-2 py-0.5 rounded-full"
+                >Waiting</span
+              >
+            </button>
+
+            <!-- Patient 3 -->
+            <button
+              onclick="selectPatient('david')"
+              id="q-david"
+              class="w-full text-left p-3 rounded-xl border border-slate-800 bg-slate-900/50 hover:border-slate-700 transition-all flex items-center justify-between group cursor-pointer"
+            >
+              <div class="space-y-1">
+                <p
+                  class="text-xs font-bold text-slate-300 group-hover:text-white transition-colors"
+                >
+                  David Chen
+                </p>
+                <p class="text-[10px] text-slate-500">
+                  10:30 AM Appt • Male, 61
+                </p>
+              </div>
+              <span
+                class="text-[9px] font-bold text-amber-500 bg-amber-500/10 border border-amber-500/20 px-2 py-0.5 rounded-full"
+                >Waiting</span
+              >
+            </button>
+          </div>
+        </div>
+
+        <!-- Clinic Summary Status -->
+        <div
+          class="border-t border-slate-800 pt-4 text-[11px] text-slate-500 space-y-1"
+        >
+          <p class="flex justify-between">
+            <span>Active Shift Time</span>
+            <span class="font-bold text-slate-300">08:00 - 16:00</span>
+          </p>
+          <p class="flex justify-between">
+            <span>Avg Consultation Time</span>
+            <span class="font-bold text-emerald-400">14 mins</span>
+          </p>
+        </div>
+      </aside>
+
+      <!-- ==================== COLUMN 2: ACTIVE CONSULTATION (Center 50%) ==================== -->
+      <section
+        class="w-1/2 bg-slate-900 p-6 flex flex-col justify-between overflow-y-auto"
+      >
+        <div class="space-y-6">
+          <!-- Selected Patient Header -->
+          <div
+            class="flex items-center justify-between pb-4 border-b border-slate-800"
+          >
+            <div>
+              <span
+                class="text-[10px] font-bold text-blue-500 uppercase tracking-widest"
+                >Active Consultation</span
+              >
+              <h2
+                id="active-patient-name"
+                class="text-2xl font-black text-white mt-1"
+              >
+                Maxwell K.
+              </h2>
+            </div>
+            <div class="text-right">
+              <span class="text-xs text-slate-400">Consultation ID</span>
+              <span class="block text-xs font-mono font-bold text-blue-400"
+                >#CON-77402</span
+              >
+            </div>
+          </div>
+
+          <!-- Symptom Input Section -->
+          <div
+            class="space-y-3 bg-slate-950 p-5 rounded-2xl border border-slate-800"
+          >
+            <h3
+              class="text-xs font-bold text-slate-400 uppercase tracking-wider flex items-center gap-2"
+            >
+              <i class="fa-solid fa-keyboard text-blue-500"></i> Enter Symptoms
+              Dynamically
+            </h3>
+
+            <!-- Dynamic Input Box -->
+            <div class="flex gap-2">
+              <input
+                type="text"
+                id="symptom-input"
+                placeholder="Type a symptom and press Enter (e.g. Dry Cough)..."
+                class="flex-grow bg-slate-900 border border-slate-800 focus:border-blue-500 rounded-xl px-4 py-3 text-sm text-slate-200 focus:outline-none transition-all placeholder:text-slate-600"
+                onkeypress="handleSymptomKey(event)"
+              />
+              <button
+                onclick="addSymptom()"
+                class="bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white font-semibold text-sm px-5 py-3 rounded-xl transition-colors flex items-center gap-2 cursor-pointer"
+              >
+                <i class="fa-solid fa-plus"></i> Add
+              </button>
+            </div>
+
+            <!-- Visual Chip Container -->
+            <div class="pt-2">
+              <p
+                class="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-2"
+              >
+                Captured Symptoms
+              </p>
+              <div id="symptom-chips" class="flex flex-wrap gap-2 min-h-[36px]">
+                <!-- Dynamic chips insert here -->
+                <span
+                  class="inline-flex items-center gap-1.5 bg-blue-500/10 text-blue-400 text-xs font-semibold px-3 py-1.5 rounded-lg border border-blue-500/20"
+                >
+                  Shortness of Breath
+                  <button
+                    onclick="this.parentElement.remove()"
+                    class="hover:text-blue-200 focus:outline-none ml-1 cursor-pointer"
+                  >
+                    <i class="fa-solid fa-xmark"></i>
+                  </button>
+                </span>
+                <span
+                  class="inline-flex items-center gap-1.5 bg-blue-500/10 text-blue-400 text-xs font-semibold px-3 py-1.5 rounded-lg border border-blue-500/20"
+                >
+                  Dry Cough
+                  <button
+                    onclick="this.parentElement.remove()"
+                    class="hover:text-blue-200 focus:outline-none ml-1 cursor-pointer"
+                  >
+                    <i class="fa-solid fa-xmark"></i>
+                  </button>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Diagnosis Action Trigger -->
+          <button
+            onclick="runDiagnosis()"
+            class="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold py-3 px-4 rounded-xl transition-all shadow-lg hover:shadow-blue-500/10 flex items-center justify-center gap-2.5 text-sm cursor-pointer"
+          >
+            <i class="fa-solid fa-wand-magic-sparkles"></i> Run Diagnostic
+            Assistant
+          </button>
+
+          <!-- ==================== LIVE DIAGNOSIS OUTPUT (PLACEHOLDERS) ==================== -->
+          <div id="diagnosis-panel" class="space-y-4 hidden">
+            <h3
+              class="text-xs font-bold text-slate-400 uppercase tracking-wider flex items-center gap-2"
+            >
+              <i class="fa-solid fa-microchip text-indigo-500"></i> AI Assist
+              Diagnostic Evaluation
+            </h3>
+
+            <!-- Processing Loading View -->
+            <div
+              id="diagnosis-loading"
+              class="hidden flex-col items-center justify-center p-8 bg-slate-950 rounded-2xl border border-slate-800 space-y-3"
+            >
+              <i
+                class="fa-solid fa-circle-notch text-2xl text-blue-500 animate-spin"
+              ></i>
+              <p class="text-xs text-slate-400 font-medium">
+                Evaluating symptoms and local clinical patterns...
+              </p>
+            </div>
+
+            <!-- Results View -->
+            <div id="diagnosis-results" class="grid grid-cols-2 gap-4">
+              <!-- Result Left Panel (Conditions) -->
+              <div
+                class="bg-slate-950 p-5 rounded-2xl border border-slate-800 space-y-4"
+              >
+                <span
+                  class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider"
+                  >Likely Conditions</span
+                >
+                <div id="conditions-list" class="space-y-3">
+                  <!-- JS will dynamically print these -->
+                </div>
+              </div>
+
+              <!-- Result Right Panel (Recommended Actions) -->
+              <div
+                class="bg-slate-950 p-5 rounded-2xl border border-slate-800 space-y-4"
+              >
+                <span
+                  class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider"
+                  >Recommended Lab Tests</span
+                >
+                <ul
+                  id="lab-list"
+                  class="space-y-2 text-xs text-slate-400 list-disc list-inside"
+                >
+                  <!-- JS will dynamically print these -->
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bottom Status Action -->
+        <div
+          class="border-t border-slate-800 pt-4 flex justify-between items-center bg-slate-900"
+        >
+          <p class="text-xs text-slate-500 flex items-center gap-1.5">
+            <i class="fa-solid fa-shield-halved text-emerald-500"></i> Data
+            secure under local clinical safety standards.
+          </p>
+          <button
+            class="bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white font-bold py-2 px-5 rounded-xl text-xs transition-colors cursor-pointer"
+          >
+            Save Consultation Records
+          </button>
+        </div>
+      </section>
+
+      <!-- ==================== COLUMN 3: CLINICAL RECORDS (Right 30%) ==================== -->
+      <section
+        class="w-3/10 bg-slate-950 border-l border-slate-800 p-6 flex flex-col justify-between overflow-y-auto"
+      >
+        <div class="space-y-6">
+          <div>
+            <h3
+              class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-4"
+            >
+              Patient Health Card
+            </h3>
+            <div
+              class="flex items-center gap-4 bg-slate-900 border border-slate-800/80 p-4 rounded-xl"
+            >
+              <div
+                class="w-12 h-12 rounded-xl bg-blue-500/10 text-blue-400 flex items-center justify-center font-black text-lg"
+              >
+                O+
+              </div>
+              <div class="space-y-0.5">
+                <h4 id="record-name" class="font-bold text-white text-sm">
+                  Maxwell K.
+                </h4>
+                <p class="text-[10px] text-slate-400 flex items-center gap-1.5">
+                  <span id="record-demographics">Male, 28 years</span> • ID:
+                  <span id="record-id">#DC-94821</span>
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Dynamic Clinical Vitals Grid -->
+          <div class="grid grid-cols-2 gap-3">
+            <div class="bg-slate-900 p-3 rounded-xl border border-slate-800/60">
+              <span class="block text-[10px] uppercase font-bold text-slate-500"
+                >Blood Pressure</span
+              >
+              <span id="vitals-bp" class="text-base font-bold text-slate-200"
+                >122/80 mmHg</span
+              >
+            </div>
+            <div class="bg-slate-900 p-3 rounded-xl border border-slate-800/60">
+              <span class="block text-[10px] uppercase font-bold text-slate-500"
+                >Heart Rate</span
+              >
+              <span id="vitals-hr" class="text-base font-bold text-emerald-400"
+                >72 bpm</span
+              >
+            </div>
+          </div>
+
+          <!-- Allergies Alert Box -->
+          <div>
+            <h4
+              class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2 flex items-center gap-1.5"
+            >
+              <i class="fa-solid fa-triangle-exclamation text-rose-500"></i>
+              Critical Alerts
+            </h4>
+            <div
+              id="record-alerts"
+              class="p-3 bg-rose-500/10 border border-rose-500/20 text-rose-400 rounded-xl text-xs font-semibold"
+            >
+              Penicillin Sensitivity
+            </div>
+          </div>
+
+          <!-- Medical History Logs -->
+          <div class="space-y-3">
+            <h4
+              class="text-xs font-bold text-slate-400 uppercase tracking-wider"
+            >
+              Historical Records
+            </h4>
+            <div class="space-y-2.5">
+              <div
+                class="p-3 bg-slate-900 border border-slate-800/50 rounded-xl text-xs space-y-1"
+              >
+                <div class="flex justify-between font-bold text-slate-300">
+                  <span>Appendectomy</span>
+                  <span class="text-slate-500">2015</span>
+                </div>
+                <p class="text-slate-500 text-[11px]">
+                  Surgical extraction, uneventful recovery.
+                </p>
+              </div>
+
+              <div
+                class="p-3 bg-slate-900 border border-slate-800/50 rounded-xl text-xs space-y-1"
+              >
+                <div class="flex justify-between font-bold text-slate-300">
+                  <span>Seasonal Flu Vaccination</span>
+                  <span class="text-slate-500">Nov 2025</span>
+                </div>
+                <p class="text-slate-500 text-[11px]">
+                  Administered at primary clinic desk.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- External Quick Referral -->
+        <div class="border-t border-slate-800 pt-4 mt-6">
+          <button
+            class="w-full bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-white border border-slate-800 text-xs font-bold py-2.5 px-4 rounded-xl transition-all flex items-center justify-center gap-2 cursor-pointer"
+          >
+            <i class="fa-solid fa-file-export"></i> Refer to Lab Specialist
+          </button>
+        </div>
+      </section>
+    </main>
+
+    <!-- Embedded Vanilla UI Interaction Script -->
+    <script>
+      // Mock Datastore containing records for patients in our queue
+      const patientDatabase = {
+        maxwell: {
+          name: "Maxwell K.",
+          age: "Male, 28 years",
+          id: "#DC-94821",
+          blood: "O+",
+          vitals: { bp: "122/80 mmHg", hr: "72 bpm" },
+          alerts: "Penicillin Sensitivity",
+          symptomTemplates: ["Shortness of Breath", "Dry Cough"],
+          diagnosis: {
+            conditions: [
+              { name: "Acute Bronchitis", prob: "78%" },
+              { name: "Pneumonia", prob: "18%" },
+            ],
+            labs: [
+              "Chest X-Ray (AP/Lateral)",
+              "Complete Blood Count (CBC)",
+              "Sputum Culture",
+            ],
+          },
+        },
+        sarah: {
+          name: "Sarah Jenkins",
+          age: "Female, 42 years",
+          id: "#DC-29104",
+          blood: "A-",
+          vitals: { bp: "135/85 mmHg", hr: "88 bpm" },
+          alerts: "NSAID Allergies (Aspirin, Ibuprofen)",
+          symptomTemplates: ["Sharp Chest Pain", "Nausea"],
+          diagnosis: {
+            conditions: [
+              { name: "Angina Pectoris", prob: "65%" },
+              { name: "Severe GERD", prob: "30%" },
+            ],
+            labs: [
+              "12-Lead Electrocardiogram (ECG)",
+              "Cardiac Troponin levels",
+              "Chest X-Ray",
+            ],
+          },
+        },
+        david: {
+          name: "David Chen",
+          age: "Male, 61 years",
+          id: "#DC-88132",
+          blood: "B+",
+          vitals: { bp: "115/70 mmHg", hr: "64 bpm" },
+          alerts: "No Clinical Alerts Reported",
+          symptomTemplates: ["Joint Stiffness", "Lower Back Pain"],
+          diagnosis: {
+            conditions: [
+              { name: "Osteoarthritis", prob: "82%" },
+              { name: "Rheumatoid Arthritis", prob: "12%" },
+            ],
+            labs: [
+              "Rheumatoid Factor Blood Test",
+              "X-Ray Lumbar Spine",
+              "C-Reactive Protein (CRP)",
+            ],
+          },
+        },
+      };
+
+      let activePatientKey = "maxwell";
+
+      // 1. Switch active patient in view
+      function selectPatient(key) {
+        activePatientKey = key;
+        const patient = patientDatabase[key];
+
+        // Highlight active queue item
+        ["maxwell", "sarah", "david"].forEach((pKey) => {
+          const el = document.getElementById(`q-${pKey}`);
+          if (pKey === key) {
+            el.className =
+              "w-full text-left p-3 rounded-xl border border-blue-500/30 bg-blue-500/5 transition-all flex items-center justify-between group cursor-pointer";
+          } else {
+            el.className =
+              "w-full text-left p-3 rounded-xl border border-slate-800 bg-slate-900/50 hover:border-slate-700 transition-all flex items-center justify-between group cursor-pointer";
+          }
+        });
+
+        // Update Consultation Area
+        document.getElementById("active-patient-name").textContent =
+          patient.name;
+
+        // Load default symptom chips
+        const chipContainer = document.getElementById("symptom-chips");
+        chipContainer.innerHTML = "";
+        patient.symptomTemplates.forEach((symptom) => {
+          createSymptomChip(symptom);
+        });
+
+        // Hide old diagnosis panel
+        document.getElementById("diagnosis-panel").classList.add("hidden");
+
+        // Update Health Card Column
+        document.getElementById("record-name").textContent = patient.name;
+        document.getElementById("record-demographics").textContent =
+          patient.age;
+        document.getElementById("record-id").textContent = patient.id;
+        document.getElementById("vitals-bp").textContent = patient.vitals.bp;
+        document.getElementById("vitals-hr").textContent = patient.vitals.hr;
+        document.getElementById("record-alerts").textContent = patient.alerts;
+
+        // Custom style for Alerts box
+        const alertsBox = document.getElementById("record-alerts");
+        if (patient.alerts.toLowerCase().includes("no clinical alerts")) {
+          alertsBox.className =
+            "p-3 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 rounded-xl text-xs font-semibold";
+        } else {
+          alertsBox.className =
+            "p-3 bg-rose-500/10 border border-rose-500/20 text-rose-400 rounded-xl text-xs font-semibold";
+        }
+      }
+
+      // 2. Add individual symptom dynamically
+      function addSymptom() {
+        const input = document.getElementById("symptom-input");
+        const val = input.value.trim();
+        if (val) {
+          createSymptomChip(val);
+          input.value = "";
+        }
+      }
+
+      function handleSymptomKey(event) {
+        if (event.key === "Enter") {
+          event.preventDefault();
+          addSymptom();
+        }
+      }
+
+      function createSymptomChip(text) {
+        const container = document.getElementById("symptom-chips");
+        const chip = document.createElement("span");
+        chip.className =
+          "inline-flex items-center gap-1.5 bg-blue-500/10 text-blue-400 text-xs font-semibold px-3 py-1.5 rounded-lg border border-blue-500/20";
+        chip.innerHTML = `
+          ${text}
+          <button onclick="this.parentElement.remove()" class="hover:text-blue-200 focus:outline-none ml-1 cursor-pointer"><i class="fa-solid fa-xmark"></i></button>
+        `;
+        container.appendChild(chip);
+      }
+
+      // 3. Mock dynamic diagnosis analysis
+      function runDiagnosis() {
+        const diagnosticPanel = document.getElementById("diagnosis-panel");
+        const loading = document.getElementById("diagnosis-loading");
+        const results = document.getElementById("diagnosis-results");
+
+        diagnosticPanel.classList.remove("hidden");
+        loading.classList.remove("hidden");
+        results.classList.add("hidden");
+
+        // Simulate clinical computing latency
+        setTimeout(() => {
+          loading.classList.add("hidden");
+          results.classList.remove("hidden");
+
+          // Pull specific conditions for selected patient
+          const data = patientDatabase[activePatientKey].diagnosis;
+
+          // Print Conditions List
+          const condContainer = document.getElementById("conditions-list");
+          condContainer.innerHTML = "";
+          data.conditions.forEach((cond) => {
+            condContainer.innerHTML += `
+              <div class="flex justify-between items-center bg-slate-900 border border-slate-800/80 p-3 rounded-xl text-xs">
+                <span class="font-bold text-slate-300">${cond.name}</span>
+                <span class="font-bold px-2.5 py-0.5 bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 rounded-md">${cond.prob} Match</span>
+              </div>
+            `;
+          });
+
+          // Print Labs list
+          const labContainer = document.getElementById("lab-list");
+          labContainer.innerHTML = "";
+          data.labs.forEach((lab) => {
+            labContainer.innerHTML += `<li class="hover:text-slate-200 transition-colors">${lab}</li>`;
+          });
+        }, 800);
+      }
+
+      // Load first patient metadata on init
+      window.onload = () => selectPatient("maxwell");
+    </script>
+  </body>
+</html>
