@@ -15,11 +15,11 @@
     />
   </head>
   <body
-    class="bg-slate-900 min-h-screen flex flex-col text-slate-100 font-sans overflow-hidden"
+    class="bg-slate-50 min-h-screen flex flex-col text-slate-800 font-sans overflow-hidden"
   >
     <!-- Top Bar -->
     <header
-      class="flex justify-between items-center px-6 py-3 bg-slate-950 border-b border-slate-800 relative z-10"
+      class="flex justify-between items-center px-6 py-3 bg-white border-b border-slate-200 shadow-sm relative z-10"
     >
       <div class="flex items-center gap-3">
         <div
@@ -27,14 +27,15 @@
         >
           <i class="fa-solid fa-heart-pulse text-xl animate-pulse"></i>
         </div>
-        <h1 class="font-black text-lg tracking-wider text-white">DOCOS</h1>
+        <h1 class="font-black text-lg tracking-wider text-slate-900">DOCOS</h1>
       </div>
       <div>
         <a
           href="doctor_dashboard.html"
-          class="text-xs font-semibold border border-slate-800 bg-slate-900 px-4 py-2 rounded-xl hover:bg-slate-800 hover:text-white transition-all flex items-center gap-2 cursor-pointer"
+          class="text-xs font-semibold border border-slate-200 bg-white px-4 py-2 rounded-xl hover:bg-slate-50 text-slate-700 transition-all flex items-center gap-2 cursor-pointer shadow-sm"
         >
-          <i class="fa-solid fa-arrow-left"></i> Return to Console
+          <i class="fa-solid fa-arrow-left text-slate-400"></i> Return to
+          Console
         </a>
       </div>
     </header>
@@ -45,11 +46,11 @@
     >
       <!-- Card 1: Main Identity Banner -->
       <div
-        class="bg-slate-950 rounded-2xl p-6 border border-slate-800 flex flex-col sm:flex-row items-center gap-6"
+        class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm flex flex-col sm:flex-row items-center gap-6"
       >
         <!-- Profile Picture Container -->
         <div
-          class="w-24 h-24 rounded-full bg-blue-600/10 border-2 border-blue-500/30 flex items-center justify-center text-blue-400 text-3xl font-black shadow-inner flex-shrink-0"
+          class="w-24 h-24 rounded-full bg-blue-50 border border-blue-100 flex items-center justify-center text-blue-600 text-3xl font-black shadow-inner flex-shrink-0"
         >
           JS
         </div>
@@ -57,20 +58,22 @@
         <!-- Identity Text -->
         <div class="text-center sm:text-left flex-grow space-y-1">
           <div class="flex flex-col sm:flex-row sm:items-center gap-2">
-            <h2 class="text-2xl font-black text-white">Dr. Jane Smith, MD</h2>
+            <h2 class="text-2xl font-black text-slate-900">
+              Dr. Jane Smith, MD
+            </h2>
             <span
-              class="w-fit mx-auto sm:mx-0 text-[10px] font-bold px-2 py-0.5 bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 rounded-full flex items-center gap-1"
+              class="w-fit mx-auto sm:mx-0 text-[10px] font-bold px-2 py-0.5 bg-emerald-50 text-emerald-700 border border-emerald-100 rounded-full flex items-center gap-1"
             >
               <span
-                class="w-1 h-1 rounded-full bg-emerald-400 animate-pulse"
+                class="w-1 h-1 rounded-full bg-emerald-500 animate-pulse"
               ></span>
-              Active Duty
+              On Duty
             </span>
           </div>
-          <p class="text-sm text-slate-400 font-medium">
+          <p class="text-sm text-slate-500 font-medium">
             General Practitioner & Clinical Director
           </p>
-          <p class="text-xs text-slate-500">
+          <p class="text-xs text-slate-400">
             <i class="fa-solid fa-building-user text-blue-500 mr-1"></i>
             Downtown Family Clinic (License: #MD-883921)
           </p>
@@ -78,42 +81,42 @@
 
         <!-- Quick Edit Button -->
         <button
-          class="bg-slate-900 hover:bg-slate-800 text-slate-300 font-semibold text-xs py-2.5 px-4 rounded-xl border border-slate-800 transition-colors flex items-center gap-2 cursor-pointer"
+          class="bg-slate-50 hover:bg-slate-100 text-slate-700 font-semibold text-xs py-2.5 px-4 rounded-xl border border-slate-200 transition-colors flex items-center gap-2 cursor-pointer shadow-sm"
         >
-          <i class="fa-solid fa-user-gear"></i> Account Settings
+          <i class="fa-solid fa-user-gear text-slate-400"></i> Account Settings
         </button>
       </div>
 
       <!-- Card 2: Simple High-Level Statistics Grid -->
       <div class="grid grid-cols-3 gap-4">
         <div
-          class="bg-slate-950/40 p-4 rounded-xl border border-slate-800/80 text-center space-y-1"
+          class="bg-white p-4 rounded-xl border border-slate-200 text-center space-y-1 shadow-sm"
         >
           <span
-            class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider"
-            >Total Patients Managed</span
+            class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider"
+            >Active Patient Registry</span
           >
-          <span class="text-2xl font-black text-white">1,240</span>
+          <span class="text-2xl font-black text-slate-900">1,240</span>
         </div>
         <div
-          class="bg-slate-950/40 p-4 rounded-xl border border-slate-800/80 text-center space-y-1"
+          class="bg-white p-4 rounded-xl border border-slate-200 text-center space-y-1 shadow-sm"
         >
           <span
-            class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider"
-            >Avg. Daily Appointments</span
+            class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider"
+            >Daily Caseload Mean</span
           >
-          <span class="text-2xl font-black text-blue-400">14-18</span>
+          <span class="text-2xl font-black text-blue-600">14-18</span>
         </div>
         <div
-          class="bg-slate-950/40 p-4 rounded-xl border border-slate-800/80 text-center space-y-1"
+          class="bg-white p-4 rounded-xl border border-slate-200 text-center space-y-1 shadow-sm"
         >
           <span
-            class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider"
-            >Clinical Rating</span
+            class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider"
+            >Clinical Compliance Rating</span
           >
-          <span class="text-2xl font-black text-emerald-400"
+          <span class="text-2xl font-black text-emerald-600"
             >4.9
-            <span class="text-xs font-normal text-slate-500">/ 5</span></span
+            <span class="text-xs font-normal text-slate-400">/ 5</span></span
           >
         </div>
       </div>
@@ -122,43 +125,43 @@
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <!-- Left Sub-Block: Contact & Professional Details -->
         <div
-          class="bg-slate-950 rounded-2xl p-6 border border-slate-800 space-y-4"
+          class="bg-white rounded-2xl p-6 border border-slate-200 space-y-4 shadow-sm"
         >
           <h3
             class="text-xs font-bold text-slate-400 uppercase tracking-wider flex items-center gap-2"
           >
             <i class="fa-solid fa-id-card text-blue-500"></i> Credentials &
-            Contact
+            Contact Records
           </h3>
 
           <div class="space-y-3 text-xs">
             <div
-              class="bg-slate-900/60 p-3 rounded-xl border border-slate-800/40 flex justify-between"
+              class="bg-slate-50/60 p-3 rounded-xl border border-slate-100 flex justify-between"
             >
               <span class="text-slate-500 font-medium">Direct Email</span>
-              <span class="text-slate-200 font-bold"
+              <span class="text-slate-800 font-bold"
                 >jane.smith@docosclinic.com</span
               >
             </div>
             <div
-              class="bg-slate-900/60 p-3 rounded-xl border border-slate-800/40 flex justify-between"
+              class="bg-slate-50/60 p-3 rounded-xl border border-slate-100 flex justify-between"
             >
               <span class="text-slate-500 font-medium">Internal Extension</span>
-              <span class="text-slate-200 font-mono font-bold">Ext. 402</span>
+              <span class="text-slate-800 font-mono font-bold">Ext. 402</span>
             </div>
             <div
-              class="bg-slate-900/60 p-3 rounded-xl border border-slate-800/40 flex justify-between"
+              class="bg-slate-50/60 p-3 rounded-xl border border-slate-100 flex justify-between"
             >
               <span class="text-slate-500 font-medium">Core Specialties</span>
-              <span class="text-blue-400 font-bold"
+              <span class="text-blue-600 font-bold"
                 >Family Medicine, Diagnosis</span
               >
             </div>
             <div
-              class="bg-slate-900/60 p-3 rounded-xl border border-slate-800/40 flex justify-between"
+              class="bg-slate-50/60 p-3 rounded-xl border border-slate-100 flex justify-between"
             >
               <span class="text-slate-500 font-medium">Education</span>
-              <span class="text-slate-200 font-bold"
+              <span class="text-slate-800 font-bold"
                 >Johns Hopkins School of Medicine</span
               >
             </div>
@@ -167,7 +170,7 @@
 
         <!-- Right Sub-Block: Clinic Operational Hours -->
         <div
-          class="bg-slate-950 rounded-2xl p-6 border border-slate-800 space-y-4"
+          class="bg-white rounded-2xl p-6 border border-slate-200 space-y-4 shadow-sm"
         >
           <h3
             class="text-xs font-bold text-slate-400 uppercase tracking-wider flex items-center gap-2"
@@ -178,40 +181,40 @@
 
           <div class="space-y-2.5 text-xs">
             <div
-              class="flex justify-between items-center py-1.5 border-b border-slate-900"
+              class="flex justify-between items-center py-1.5 border-b border-slate-50"
             >
-              <span class="text-slate-400 font-medium">Monday — Thursday</span>
+              <span class="text-slate-500 font-medium">Monday — Thursday</span>
               <span
-                class="text-slate-200 font-bold bg-slate-900 px-2.5 py-1 rounded-md"
+                class="text-slate-700 font-bold bg-slate-50 px-2.5 py-1 rounded-md border border-slate-100"
                 >08:00 - 16:00</span
               >
             </div>
             <div
-              class="flex justify-between items-center py-1.5 border-b border-slate-900"
+              class="flex justify-between items-center py-1.5 border-b border-slate-50"
             >
-              <span class="text-slate-400 font-medium">Friday Shift</span>
+              <span class="text-slate-500 font-medium">Friday Shift</span>
               <span
-                class="text-slate-200 font-bold bg-slate-900 px-2.5 py-1 rounded-md"
+                class="text-slate-700 font-bold bg-slate-50 px-2.5 py-1 rounded-md border border-slate-100"
                 >08:00 - 13:00</span
               >
             </div>
             <div
-              class="flex justify-between items-center py-1.5 border-b border-slate-900"
+              class="flex justify-between items-center py-1.5 border-b border-slate-50"
             >
-              <span class="text-slate-400 font-medium"
+              <span class="text-slate-500 font-medium"
                 >Weekends & Holidays</span
               >
               <span
-                class="text-rose-400 font-bold bg-rose-500/10 border border-rose-500/20 px-2.5 py-1 rounded-md"
+                class="text-rose-700 font-bold bg-rose-50 border border-rose-100 px-2.5 py-1 rounded-md"
                 >Off Duty</span
               >
             </div>
             <div class="flex justify-between items-center py-1.5">
-              <span class="text-slate-400 font-medium"
+              <span class="text-slate-500 font-medium"
                 >On-Call Emergencies</span
               >
               <span
-                class="text-amber-400 font-bold bg-amber-500/10 border border-amber-500/20 px-2.5 py-1 rounded-md"
+                class="text-amber-700 font-bold bg-amber-50 border border-amber-100 px-2.5 py-1 rounded-md"
                 >Rotational Basis</span
               >
             </div>
@@ -221,7 +224,7 @@
 
       <!-- Bottom System Version Tag -->
       <p
-        class="text-center text-[10px] text-slate-600 font-mono uppercase tracking-widest"
+        class="text-center text-[10px] text-slate-400 font-mono uppercase tracking-widest"
       >
         DOCOS Medical Node v1.4.0-Secure
       </p>
