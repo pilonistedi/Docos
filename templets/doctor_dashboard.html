@@ -3,10 +3,23 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Docos | Doctor Console</title>
-    <!-- Tailwind via CDN for preview. In your Flask app, swap this back for
-         <link href="/static/output.css" rel="stylesheet" /> and rebuild your CSS. -->
+    <title>DOCOS | Doctor Workstation</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: "#2563eb",
+              secondary: "#64748b",
+              success: "#16a34a",
+              warning: "#d97706",
+              danger: "#dc2626",
+            },
+          },
+        },
+      };
+    </script>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
@@ -16,25 +29,38 @@
     />
   </head>
   <body
-    class="h-screen flex flex-col bg-slate-50 text-slate-800 font-sans overflow-hidden"
+    class="h-screen bg-slate-50 text-slate-800 font-sans antialiased flex flex-col overflow-hidden"
   >
-    <!-- Header -->
+    <!-- Unified Header -->
     <header
-      class="shrink-0 flex justify-between items-center px-6 py-3 bg-white border-b border-slate-200 shadow-sm"
+      class="bg-white border-b border-slate-100 px-6 py-3 shrink-0 flex justify-between items-center shadow-sm"
     >
       <div class="flex items-center gap-3">
         <div
-          class="bg-blue-600 w-8 h-8 rounded-lg text-white flex items-center justify-center"
+          class="w-8 h-8 bg-blue-50 text-primary flex items-center justify-center rounded-xl border border-blue-100 shadow-sm"
         >
-          <i class="fa-solid fa-heart-pulse text-sm"></i>
+          <i class="fa-solid fa-heart-pulse text-base"></i>
         </div>
-        <h1 class="font-bold text-lg text-slate-900">Docos</h1>
+        <span class="font-bold text-lg tracking-tight text-slate-900"
+          >DOCOS</span
+        >
+        <span
+          class="text-[10px] font-bold bg-blue-50 text-primary px-2 py-0.5 rounded-md uppercase tracking-wider border border-blue-100"
+          >Clinical Console</span
+        >
       </div>
       <a href="doctor_profile.html">
         <div class="flex items-center gap-3">
-          <span class="text-sm font-medium text-slate-700">Dr. Jane Smith</span>
+          <div class="text-right">
+            <span class="block text-xs font-bold text-slate-800"
+              >Dr. Jane Smith, MD</span
+            >
+            <span class="block text-[10px] font-medium text-slate-400"
+              >Attending Cardiologist</span
+            >
+          </div>
           <div
-            class="w-8 h-8 rounded-full bg-blue-50 border border-blue-200 flex items-center justify-center text-blue-600 font-semibold text-xs"
+            class="w-8 h-8 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center font-bold text-xs text-slate-600"
           >
             JS
           </div>
@@ -42,277 +68,369 @@
       </a>
     </header>
 
-    <!-- Workspace -->
+    <!-- Main Operational Grid Workspace -->
     <main class="flex-1 min-h-0 flex overflow-hidden">
-      <!-- COLUMN 1: Queue -->
+      <!-- COLUMN 1: Real-time Patient Triage Queue -->
       <aside
-        class="w-1/5 bg-white border-r border-slate-200 p-4 flex flex-col justify-between overflow-y-auto"
+        class="w-1/4 max-w-xs bg-white border-r border-slate-100 flex flex-col justify-between p-4 shrink-0 overflow-y-auto"
       >
         <div class="space-y-4">
-          <div class="flex justify-between items-baseline">
-            <h3
-              class="text-xs font-bold text-slate-500 uppercase tracking-wide"
+          <div class="flex justify-between items-center">
+            <span
+              class="text-[10px] font-bold text-slate-400 uppercase tracking-wider"
+              >Triage Queue</span
             >
-              Today's Queue
-            </h3>
-            <span class="text-xs font-medium text-slate-400">3 waiting</span>
+            <span
+              class="text-[10px] font-bold text-slate-500 bg-slate-100 px-2 py-0.5 rounded-full"
+              id="queue-count"
+              >3 Waiting</span
+            >
           </div>
 
+          <!-- Quick Filter Input Box -->
           <div class="relative">
             <i
-              class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-xs text-slate-400"
+              class="fa-solid fa-magnifying-glass absolute left-3 top-3 text-xs text-slate-400"
             ></i>
             <input
               type="text"
               id="patient-search"
-              placeholder="Search patients"
-              class="w-full bg-slate-50 border border-slate-200 rounded-lg py-2 pl-8 pr-3 text-sm text-slate-800 placeholder:text-slate-400 focus:outline-none focus:border-blue-500 focus:bg-white transition-colors"
+              placeholder="Filter active triage items..."
+              class="w-full bg-slate-50 border border-slate-200 focus:border-primary rounded-xl py-2 pl-8.5 pr-3 text-xs text-slate-800 focus:outline-none transition-colors"
             />
           </div>
 
-          <div class="space-y-1" id="queue-container">
+          <!-- Dynamic Active Container Queue Slots -->
+          <div class="space-y-2" id="queue-container">
+            <!-- Items injected / modified natively via structural key mappings below -->
             <button
               onclick="selectPatient('maxwell')"
               id="q-maxwell"
-              class="w-full text-left px-3 py-2.5 rounded-lg border-l-2 border-blue-600 bg-blue-50/70"
+              class="w-full text-left p-3 rounded-xl border border-blue-100 bg-blue-50/40 block transition-all"
             >
-              <p class="text-sm font-semibold text-blue-900">Maxwell K.</p>
-              <p class="text-xs text-slate-500">9:30 AM · M, 28</p>
+              <div class="flex justify-between items-start mb-0.5">
+                <span class="text-xs font-bold text-slate-900">Maxwell K.</span
+                ><span
+                  class="text-[9px] font-bold text-primary bg-white border border-blue-100 px-1.5 py-0.5 rounded"
+                  >09:30 AM</span
+                >
+              </div>
+              <p class="text-[10px] text-slate-500 font-medium">
+                Male, 28 &bull; Room 4A
+              </p>
             </button>
 
             <button
               onclick="selectPatient('sarah')"
               id="q-sarah"
-              class="w-full text-left px-3 py-2.5 rounded-lg border-l-2 border-transparent hover:bg-slate-50 transition-colors"
+              class="w-full text-left p-3 rounded-xl border border-transparent hover:bg-slate-50 block transition-all"
             >
-              <p class="text-sm font-semibold text-slate-700">Sarah Jenkins</p>
-              <p class="text-xs text-slate-500">10:00 AM · F, 42</p>
+              <div class="flex justify-between items-start mb-0.5">
+                <span class="text-xs font-semibold text-slate-700"
+                  >Sarah Jenkins</span
+                ><span class="text-[9px] text-slate-400 font-medium"
+                  >10:00 AM</span
+                >
+              </div>
+              <p class="text-[10px] text-slate-400">
+                Female, 42 &bull; Triage Room B
+              </p>
             </button>
 
             <button
               onclick="selectPatient('david')"
               id="q-david"
-              class="w-full text-left px-3 py-2.5 rounded-lg border-l-2 border-transparent hover:bg-slate-50 transition-colors"
+              class="w-full text-left p-3 rounded-xl border border-transparent hover:bg-slate-50 block transition-all"
             >
-              <p class="text-sm font-semibold text-slate-700">David Chen</p>
-              <p class="text-xs text-slate-500">10:30 AM · M, 61</p>
+              <div class="flex justify-between items-start mb-0.5">
+                <span class="text-xs font-semibold text-slate-700"
+                  >David Chen</span
+                ><span class="text-[9px] text-slate-400 font-medium"
+                  >10:30 AM</span
+                >
+              </div>
+              <p class="text-[10px] text-slate-400">
+                Male, 61 &bull; Main Intake
+              </p>
             </button>
           </div>
         </div>
 
         <div
-          class="border-t border-slate-200 pt-3 text-xs text-slate-500 space-y-1"
+          class="border-t border-slate-100 pt-3 text-[10px] text-slate-400 font-semibold space-y-1"
         >
-          <p class="flex justify-between">
-            <span>Shift</span
-            ><span class="text-slate-700 font-medium">08:00–16:00</span>
-          </p>
-          <p class="flex justify-between">
-            <span>Avg. consult</span
-            ><span class="text-slate-700 font-medium">14 min</span>
-          </p>
+          <div class="flex justify-between">
+            <span>Active Unit Rotation:</span
+            ><span class="text-slate-700">08:00 - 16:00</span>
+          </div>
+          <div class="flex justify-between">
+            <span>Mean Session Processing:</span
+            ><span class="text-slate-700">14 Min</span>
+          </div>
         </div>
       </aside>
 
-      <!-- COLUMN 2: Active Consultation -->
+      <!-- COLUMN 2: Intake Documentation Core -->
       <section
-        class="w-1/2 bg-slate-50 p-6 flex flex-col justify-between overflow-y-auto"
+        class="flex-1 bg-slate-50/50 p-6 flex flex-col justify-between overflow-y-auto border-r border-slate-100"
       >
-        <div class="space-y-6">
-          <div class="pb-4 border-b border-slate-200">
+        <div class="space-y-5">
+          <!-- Active Encounter Meta Banner -->
+          <div
+            class="bg-white border border-slate-100 rounded-2xl p-4 flex justify-between items-center shadow-sm"
+          >
+            <div>
+              <span
+                class="block text-[9px] font-bold text-primary uppercase tracking-wider"
+                >Encounter Workspace</span
+              >
+              <h2
+                id="active-patient-name"
+                class="text-lg font-bold text-slate-900 mt-0.5"
+              >
+                Maxwell K.
+              </h2>
+            </div>
             <span
-              class="text-xs font-bold text-blue-600 uppercase tracking-wide"
-              >Active Consultation</span
+              class="text-[10px] font-bold px-2.5 py-1 bg-emerald-50 text-success rounded-full border border-green-100 flex items-center gap-1"
             >
-            <h2
-              id="active-patient-name"
-              class="text-2xl font-bold text-slate-900 mt-0.5"
-            >
-              Maxwell K.
-            </h2>
+              <span class="w-1 h-1 rounded-full bg-success"></span> Consultation
+              Live
+            </span>
           </div>
 
-          <div class="space-y-3">
-            <h3
-              class="text-xs font-bold text-slate-500 uppercase tracking-wide"
+          <!-- Symptom Processing Matrix -->
+          <div
+            class="bg-white border border-slate-100 rounded-2xl p-5 shadow-sm space-y-3"
+          >
+            <span
+              class="block text-[9px] font-bold text-slate-400 uppercase tracking-wider"
+              >Presenting Signs & Clinical Symptoms</span
             >
-              Symptoms
-            </h3>
             <div class="flex gap-2">
               <input
                 type="text"
                 id="symptom-input"
-                placeholder="Type a symptom and press Enter…"
-                class="flex-grow bg-white border border-slate-200 focus:border-blue-500 rounded-lg px-3 py-2.5 text-sm text-slate-800 focus:outline-none placeholder:text-slate-400 shadow-sm"
+                placeholder="Log active token presentation markers..."
+                class="flex-grow bg-slate-50 border border-slate-200 focus:border-primary rounded-xl px-3 py-2 text-xs text-slate-800 focus:outline-none placeholder:text-slate-400 shadow-inner"
                 onkeypress="handleSymptomKey(event)"
               />
               <button
                 onclick="addSymptom()"
-                class="bg-blue-600 hover:bg-blue-700 text-white font-medium text-sm px-4 py-2.5 rounded-lg transition-colors shadow-sm"
+                class="bg-primary hover:bg-blue-700 text-white font-semibold text-xs px-4 rounded-xl transition-all shadow-sm"
               >
                 Add
               </button>
             </div>
             <div
               id="symptom-chips"
-              class="flex flex-wrap gap-2 min-h-[32px]"
+              class="flex flex-wrap gap-2 pt-1 min-h-[32px]"
             ></div>
           </div>
 
+          <!-- Unified Diagnostics & Lab Intake Routing Block -->
           <button
             onclick="runDiagnosis()"
-            class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-lg text-sm flex items-center justify-center gap-2 transition-colors shadow-sm"
+            class="w-full bg-primary hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-xl text-xs flex items-center justify-center gap-2 transition-all shadow-sm"
           >
-            <i class="fa-solid fa-wand-magic-sparkles"></i> Run Diagnostic
-            Assistant
+            <i class="fa-solid fa-wand-magic-sparkles text-[11px]"></i>
+            Synthesize Clinical Diagnosis Options
           </button>
 
+          <!-- Interactive Results & Diagnostic Extraction Board -->
           <div
             id="diagnosis-panel"
-            class="space-y-4 hidden bg-white p-4 rounded-xl border border-slate-200 shadow-sm"
+            class="hidden bg-white border border-slate-100 rounded-2xl p-5 shadow-sm space-y-4"
           >
-            <h3
-              class="text-xs font-bold text-slate-500 uppercase tracking-wide"
-            >
-              Diagnostic Results
-            </h3>
+            <div class="border-b border-slate-100 pb-2">
+              <span
+                class="text-[9px] font-bold text-slate-400 uppercase tracking-wider"
+                >Generated Differential Analytics</span
+              >
+            </div>
 
+            <!-- Loader Wrapper -->
             <div
               id="diagnosis-loading"
-              class="hidden flex-col items-center justify-center py-8 space-y-3"
+              class="hidden flex-col items-center justify-center py-6 space-y-2"
             >
               <i
-                class="fa-solid fa-circle-notch text-xl text-blue-600 animate-spin"
+                class="fa-solid fa-circle-notch text-base text-primary animate-spin"
               ></i>
-              <p class="text-xs text-slate-500 font-medium">
-                Evaluating symptoms…
+              <p class="text-[11px] text-slate-400 font-semibold">
+                Running differential diagnostic tracking model...
               </p>
             </div>
 
-            <div id="diagnosis-results" class="grid grid-cols-2 gap-6">
+            <!-- Double Column Analytical Layout Grid -->
+            <div
+              id="diagnosis-results"
+              class="grid grid-cols-1 md:grid-cols-2 gap-5 text-xs"
+            >
               <div class="space-y-2">
                 <span
-                  class="block text-xs font-bold text-slate-400 uppercase tracking-wide"
-                  >Likely Conditions</span
+                  class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider"
+                  >Matched Pathologies</span
                 >
                 <div
                   id="conditions-list"
-                  class="divide-y divide-slate-100"
+                  class="divide-y divide-slate-100 bg-slate-50/50 p-2 border border-slate-100 rounded-xl"
                 ></div>
               </div>
+
+              <!-- Direct Lab Collection Panel Block Upgrade -->
               <div class="space-y-2">
                 <span
-                  class="block text-xs font-bold text-slate-400 uppercase tracking-wide"
-                  >Recommended Labs</span
+                  class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider"
+                  >Specimen Extraction Panel</span
                 >
-                <ul
-                  id="lab-list"
-                  class="space-y-1.5 text-sm text-slate-600 list-disc list-inside"
-                ></ul>
+                <div
+                  class="bg-slate-50/50 p-3 border border-slate-100 rounded-xl space-y-3"
+                >
+                  <p class="text-[10px] text-slate-400 leading-normal">
+                    Select the corresponding clinical procedures to prepare
+                    diagnostic barcoded test containers for verification labs:
+                  </p>
+                  <ul id="lab-list" class="space-y-2"></ul>
+                  <button
+                    onclick="
+                      alert(
+                        'Success! Barcode tracking orders generated. Print extraction tags immediately.',
+                      )
+                    "
+                    class="w-full mt-2 bg-slate-900 hover:bg-slate-800 text-white font-bold text-[10px] uppercase tracking-wider py-2 rounded-lg transition-colors"
+                  >
+                    <i class="fa-solid fa-print mr-1"></i> Register Collected
+                    Samples
+                  </button>
+                </div>
               </div>
             </div>
           </div>
         </div>
 
-        <div class="border-t border-slate-200 pt-4 flex justify-end">
+        <div class="pt-4 border-t border-slate-100 flex justify-end shrink-0">
           <button
-            class="bg-white hover:bg-slate-50 text-slate-700 font-medium py-2 px-4 rounded-lg text-sm border border-slate-200 transition-colors shadow-sm"
+            class="bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 font-bold text-xs py-2.5 px-4 rounded-xl shadow-sm transition-colors"
           >
-            Save Consultation
+            Finalize Encounter Record
           </button>
         </div>
       </section>
 
-      <!-- COLUMN 3: Clinical Records -->
+      <!-- COLUMN 3: Clinical Health Records Ledger -->
       <section
-        class="w-[30%] bg-white border-l border-slate-200 p-6 flex flex-col justify-between overflow-y-auto"
+        class="w-1/4 bg-white p-5 flex flex-col justify-between overflow-y-auto shrink-0"
       >
-        <div class="space-y-6">
-          <div>
-            <h3
-              class="text-xs font-bold text-slate-500 uppercase tracking-wide mb-3"
+        <div class="space-y-5">
+          <!-- Profile Identity Module -->
+          <div class="space-y-3">
+            <span
+              class="block text-[9px] font-bold text-slate-400 uppercase tracking-wider"
+              >Demographic Core</span
             >
-              Patient
-            </h3>
-            <div class="flex items-center gap-3">
+            <div
+              class="flex items-center gap-3 bg-slate-50 p-3 rounded-xl border border-slate-100"
+            >
               <div
-                class="w-11 h-11 rounded-full bg-blue-50 text-blue-600 border border-blue-100 flex items-center justify-center font-bold text-sm"
+                class="w-10 h-10 rounded-xl bg-blue-50 text-primary border border-blue-100 flex items-center justify-center font-bold text-xs shadow-inner"
+                id="record-blood"
               >
                 O+
               </div>
-              <div>
-                <h4 id="record-name" class="font-bold text-slate-900 text-sm">
+              <div class="min-w-0">
+                <h4
+                  id="record-name"
+                  class="font-bold text-slate-900 text-xs truncate"
+                >
                   Maxwell K.
                 </h4>
-                <p class="text-xs text-slate-500 font-medium">
-                  <span id="record-demographics">Male, 28</span> ·
-                  <span id="record-id">#DC-94821</span>
+                <p class="text-[11px] text-slate-400 font-medium">
+                  <span id="record-demographics">Male, 28</span> &bull;
+                  <span id="record-id" class="font-mono">#DC-94821</span>
                 </p>
               </div>
             </div>
           </div>
 
-          <div
-            class="flex gap-8 bg-slate-50 p-3 rounded-lg border border-slate-100"
-          >
-            <div>
-              <span class="block text-xs text-slate-400 font-medium"
-                >Blood Pressure</span
+          <!-- Vital Intake Timeline Panel -->
+          <div class="space-y-2">
+            <span
+              class="block text-[9px] font-bold text-slate-400 uppercase tracking-wider"
+              >Current Session Vitals</span
+            >
+            <div class="grid grid-cols-2 gap-2 text-center text-xs">
+              <div
+                class="bg-slate-50/60 p-2 rounded-xl border border-slate-100"
               >
-              <span id="vitals-bp" class="font-bold text-slate-800 text-sm"
-                >122/80</span
+                <span
+                  class="block text-[10px] text-slate-400 mb-0.5 font-medium"
+                  >Blood Pressure</span
+                >
+                <span id="vitals-bp" class="font-bold text-slate-800"
+                  >122/80</span
+                >
+              </div>
+              <div
+                class="bg-slate-50/60 p-2 rounded-xl border border-slate-100"
               >
-            </div>
-            <div>
-              <span class="block text-xs text-slate-400 font-medium"
-                >Heart Rate</span
-              >
-              <span id="vitals-hr" class="font-bold text-slate-800 text-sm"
-                >72 bpm</span
-              >
+                <span
+                  class="block text-[10px] text-slate-400 mb-0.5 font-medium"
+                  >Heart Rate</span
+                >
+                <span id="vitals-hr" class="font-bold text-slate-800"
+                  >72 bpm</span
+                >
+              </div>
             </div>
           </div>
 
-          <div>
-            <h4
-              class="text-xs font-bold text-slate-500 uppercase tracking-wide mb-2 flex items-center gap-1.5"
+          <!-- Pathological / Sensitivity Alerts -->
+          <div class="space-y-2">
+            <span
+              class="block text-[9px] font-bold text-slate-400 uppercase tracking-wider"
+              >Clinical Vulnerability Signals</span
             >
-              <i class="fa-solid fa-triangle-exclamation text-amber-500"></i>
-              Alerts
-            </h4>
             <div
               id="record-alerts"
-              class="p-2.5 bg-red-50 border border-red-200 text-red-700 rounded-lg text-xs font-semibold"
+              class="p-3 bg-red-50 border border-red-100 text-danger rounded-xl text-[11px] font-bold flex items-center gap-2"
             >
+              <i class="fa-solid fa-triangle-exclamation text-xs"></i>
               Penicillin Sensitivity
             </div>
           </div>
 
-          <div class="space-y-3">
-            <h4
-              class="text-xs font-bold text-slate-500 uppercase tracking-wide"
+          <!-- Chronic / Surgical Background Timelines -->
+          <div class="space-y-2">
+            <span
+              class="block text-[9px] font-bold text-slate-400 uppercase tracking-wider"
+              >Historical Medical Track</span
             >
-              History
-            </h4>
-            <div class="space-y-3 text-sm">
-              <div class="p-2.5 hover:bg-slate-50 rounded-lg transition-colors">
-                <div class="flex justify-between text-slate-800 font-semibold">
-                  <span>Appendectomy</span>
-                  <span class="text-slate-400 text-xs font-normal">2015</span>
+            <div class="space-y-1.5 text-xs">
+              <div
+                class="p-2.5 bg-slate-50/40 rounded-xl border border-slate-100"
+              >
+                <div
+                  class="flex justify-between font-bold text-slate-700 text-[11px]"
+                >
+                  <span>Appendectomy Procedure</span
+                  ><span class="text-slate-400 font-normal">2015</span>
                 </div>
-                <p class="text-xs text-slate-500 mt-0.5">
-                  Uneventful recovery.
+                <p class="text-[10px] text-slate-400 mt-0.5 leading-normal">
+                  Standard operation, primary healing clear.
                 </p>
               </div>
-              <div class="p-2.5 hover:bg-slate-50 rounded-lg transition-colors">
-                <div class="flex justify-between text-slate-800 font-semibold">
-                  <span>Flu vaccination</span>
-                  <span class="text-slate-400 text-xs font-normal"
-                    >Nov 2025</span
-                  >
+              <div
+                class="p-2.5 bg-slate-50/40 rounded-xl border border-slate-100"
+              >
+                <div
+                  class="flex justify-between font-bold text-slate-700 text-[11px]"
+                >
+                  <span>Seasonal Influenza Vaccine</span
+                  ><span class="text-slate-400 font-normal">Nov 2025</span>
                 </div>
-                <p class="text-xs text-slate-500 mt-0.5">
-                  Administered at clinic.
+                <p class="text-[10px] text-slate-400 mt-0.5 leading-normal">
+                  Administered internally at Thika Branch.
                 </p>
               </div>
             </div>
@@ -320,13 +438,14 @@
         </div>
 
         <button
-          class="w-full bg-slate-50 hover:bg-slate-100 text-slate-700 border border-slate-200 text-sm font-semibold py-2.5 rounded-lg transition-colors shadow-sm"
+          class="w-full bg-slate-50 hover:bg-slate-100 text-slate-700 border border-slate-200 font-bold text-xs py-2.5 rounded-xl transition-all mt-4 shadow-sm"
         >
-          Refer to Specialist
+          Route Referral Outbound
         </button>
       </section>
     </main>
 
+    <!-- Structural Mapping State Engines -->
     <script>
       const patientDatabase = {
         maxwell: {
@@ -400,21 +519,17 @@
 
         queueKeys.forEach((pKey) => {
           const el = document.getElementById(`q-${pKey}`);
-          const nameEl = el.querySelector("p");
           if (pKey === key) {
             el.className =
-              "w-full text-left px-3 py-2.5 rounded-lg border-l-2 border-blue-600 bg-blue-50/70";
-            nameEl.className = "text-sm font-semibold text-blue-900";
+              "w-full text-left p-3 rounded-xl border border-blue-100 bg-blue-50/40 block transition-all";
           } else {
             el.className =
-              "w-full text-left px-3 py-2.5 rounded-lg border-l-2 border-transparent hover:bg-slate-50 transition-colors";
-            nameEl.className = "text-sm font-semibold text-slate-700";
+              "w-full text-left p-3 rounded-xl border border-transparent hover:bg-slate-50 block transition-all";
           }
         });
 
         document.getElementById("active-patient-name").textContent =
           patient.name;
-
         const chipContainer = document.getElementById("symptom-chips");
         chipContainer.innerHTML = "";
         patient.symptomTemplates.forEach((symptom) =>
@@ -422,8 +537,8 @@
         );
 
         document.getElementById("diagnosis-panel").classList.add("hidden");
-
         document.getElementById("record-name").textContent = patient.name;
+        document.getElementById("record-blood").textContent = patient.blood;
         document.getElementById("record-demographics").textContent =
           patient.age;
         document.getElementById("record-id").textContent = patient.id;
@@ -431,12 +546,13 @@
         document.getElementById("vitals-hr").textContent = patient.vitals.hr;
 
         const alertsBox = document.getElementById("record-alerts");
-        alertsBox.textContent = patient.alerts;
+        alertsBox.innerHTML = `<i class="fa-solid fa-triangle-exclamation text-xs"></i> ${patient.alerts}`;
         if (patient.alerts.toLowerCase().includes("no clinical alerts")) {
-          alertsBox.className = "text-sm font-medium text-slate-400 px-1";
+          alertsBox.className =
+            "p-3 bg-slate-50 border border-slate-100 text-slate-400 rounded-xl text-[11px] font-semibold";
         } else {
           alertsBox.className =
-            "p-2.5 bg-red-50 border border-red-200 text-red-700 rounded-lg text-xs font-semibold";
+            "p-3 bg-red-50 border border-red-100 text-danger rounded-xl text-[11px] font-bold flex items-center gap-2";
         }
       }
 
@@ -460,8 +576,8 @@
         const container = document.getElementById("symptom-chips");
         const chip = document.createElement("span");
         chip.className =
-          "inline-flex items-center gap-1.5 bg-slate-200/80 text-slate-700 text-xs font-semibold px-2.5 py-1.5 rounded-md border border-slate-300/30 shadow-sm";
-        chip.innerHTML = `${text} <button onclick="this.parentElement.remove()" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-[10px]"></i></button>`;
+          "inline-flex items-center gap-1.5 bg-slate-100 border border-slate-200 text-slate-700 text-[11px] font-semibold px-2 py-1 rounded-lg";
+        chip.innerHTML = `${text} <button onclick="this.parentElement.remove()" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-[9px]"></i></button>`;
         container.appendChild(chip);
       }
 
@@ -481,24 +597,28 @@
           results.classList.remove("hidden");
 
           const data = patientDatabase[activePatientKey].diagnosis;
-
           const condContainer = document.getElementById("conditions-list");
           condContainer.innerHTML = "";
           data.conditions.forEach((cond) => {
             condContainer.innerHTML += `
-              <div class="flex justify-between items-center py-2 text-sm">
+              <div class="flex justify-between items-center py-2 text-[11px]">
                 <span class="text-slate-700 font-medium">${cond.name}</span>
-                <span class="font-bold text-blue-600">${cond.prob}</span>
+                <span class="font-bold text-primary">${cond.prob}</span>
               </div>
             `;
           });
 
           const labContainer = document.getElementById("lab-list");
           labContainer.innerHTML = "";
-          data.labs.forEach((lab) => {
-            labContainer.innerHTML += `<li>${lab}</li>`;
+          data.labs.forEach((lab, index) => {
+            labContainer.innerHTML += `
+              <li class="flex items-start gap-2 py-1">
+                <input type="checkbox" id="lab-chk-${index}" class="mt-0.5 rounded text-primary border-slate-300 focus:ring-blue-500/10">
+                <label for="lab-chk-${index}" class="text-slate-600 font-medium select-none">${lab}</label>
+              </li>
+            `;
           });
-        }, 800);
+        }, 600);
       }
 
       document

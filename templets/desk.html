@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="en" class="h-full bg-slate-100">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DOCOS - Clinic Administration Panel</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body
+    class="h-full font-sans text-slate-800 antialiased selection:bg-indigo-600 selection:text-white"
+  >
+    <!-- Top Navigation Bar -->
+    <header
+      class="flex h-16 items-center justify-between border-b border-slate-200 bg-white px-6 shadow-sm"
+    >
+      <div class="flex items-center gap-4">
+        <span class="text-2xl font-black tracking-wider text-indigo-600"
+          >DOCOS</span
+        >
+        <div
+          class="hidden sm:flex items-center gap-2 border-l border-slate-200 pl-4"
+        >
+          <span class="inline-flex h-2 w-2 rounded-full bg-emerald-500"></span>
+          <p class="text-xs font-semibold text-slate-500">
+            System Monitoring: RUNNING
+          </p>
+        </div>
+      </div>
+
+      <!-- Live Hospital Status Bar Metrics -->
+      <div class="flex items-center gap-6 text-xs font-medium text-slate-500">
+        <div class="hidden md:block">
+          <p
+            class="text-slate-400 uppercase tracking-wider text-[10px] font-bold"
+          >
+            Room Allocation
+          </p>
+          <p class="text-slate-700 font-semibold">20/20 Rooms Active</p>
+        </div>
+        <div class="hidden md:block h-6 w-px bg-slate-200"></div>
+        <div>
+          <p
+            class="text-slate-400 uppercase tracking-wider text-[10px] font-bold"
+          >
+            Waiting Lobby
+          </p>
+          <p class="text-amber-600 font-bold">14 Patients Checked In</p>
+        </div>
+        <div class="h-6 w-px bg-slate-200"></div>
+        <div class="text-right">
+          <p
+            class="text-slate-400 uppercase tracking-wider text-[10px] font-bold"
+          >
+            Current Time
+          </p>
+          <p class="text-sm font-bold text-slate-900 font-mono">11:02 AM</p>
+        </div>
+      </div>
+    </header>
+
+    <!-- Dashboard Container Split Layout -->
+    <div class="flex h-[calc(100vh-64px)] overflow-hidden">
+      <!-- LEFT PANEL: Automated Action Logs -->
+      <aside
+        class="hidden lg:flex w-80 flex-col border-r border-slate-200 bg-white p-4 overflow-y-auto"
+      >
+        <div class="mb-4">
+          <h2
+            class="text-xs font-bold uppercase tracking-widest text-slate-500"
+          >
+            Automated Background Logs
+          </h2>
+          <p class="text-xxs text-slate-400">
+            System adjustments applied via schedule criteria
+          </p>
+        </div>
+
+        <div class="space-y-3">
+          <!-- Auto Event 1 -->
+          <div
+            class="rounded-lg bg-slate-50 p-3 border border-slate-200 text-xs"
+          >
+            <div
+              class="flex items-center justify-between text-indigo-600 mb-1 font-mono text-[10px] font-bold"
+            >
+              <span>[SLOT_AUTO_ADVANCE]</span>
+              <span>11:01 AM</span>
+            </div>
+            <p class="text-slate-600">
+              Dr. Rivera wrapped up consultation. Patient
+              <strong class="text-slate-900">Leo Sterling</strong> assigned to
+              Room 108.
+            </p>
+          </div>
+
+          <!-- Auto Event 2 -->
+          <div
+            class="rounded-lg bg-slate-50 p-3 border border-slate-200 text-xs"
+          >
+            <div
+              class="flex items-center justify-between text-slate-500 mb-1 font-mono text-[10px] font-bold"
+            >
+              <span>[NOTIFICATION_SENT]</span>
+              <span>11:00 AM</span>
+            </div>
+            <p class="text-slate-600">
+              Sent automated late reminder message to
+              <strong class="text-slate-900">Elena Rostova</strong> (11:00 AM
+              Online slot).
+            </p>
+          </div>
+        </div>
+      </aside>
+
+      <!-- MAIN CENTER PANEL: Receptionist Task Feed -->
+      <main class="flex-1 overflow-y-auto p-6 bg-slate-50">
+        <div class="mb-6 flex items-center justify-between">
+          <div>
+            <h2 class="text-xl font-bold tracking-tight text-slate-900">
+              Desk Tasks & Schedule Exceptions
+            </h2>
+            <p class="text-sm text-slate-500">
+              Please review and process the following schedule disruptions
+              requiring staff action.
+            </p>
+          </div>
+          <span
+            class="rounded bg-rose-50 border border-rose-200 px-2.5 py-1 text-xs font-bold text-rose-700 tracking-wide"
+          >
+            2 Actions Pending
+          </span>
+        </div>
+
+        <!-- Task Container List -->
+        <div class="space-y-4">
+          <!-- TASK CARD 1: APPOINTMENT DELAY / GRACE PERIOD CONFLICT -->
+          <div
+            class="rounded-xl border border-amber-300 bg-white p-5 shadow-sm relative overflow-hidden"
+          >
+            <div
+              class="flex flex-col md:flex-row md:items-start md:justify-between gap-4"
+            >
+              <div class="space-y-2">
+                <div class="flex flex-wrap items-center gap-2">
+                  <span
+                    class="rounded bg-amber-100 border border-amber-200 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-amber-800"
+                    >Delayed Appointment</span
+                  >
+                  <span class="text-xs font-mono text-slate-400"
+                    >Ref: #90412</span
+                  >
+                </div>
+
+                <h3 class="text-lg font-bold text-slate-900">
+                  Call Patient: Elena Rostova (Online Booking)
+                </h3>
+
+                <p class="text-sm text-slate-600 max-w-2xl">
+                  Patient has not checked in for her 11:00 AM slot with
+                  <strong class="text-indigo-600"
+                    >Dr. Sarah Jenkins (Cardiology)</strong
+                  >. The 10-minute slot retention window closes in
+                  <span
+                    class="font-mono font-bold text-amber-700 bg-amber-50 px-1 rounded border border-amber-200"
+                    >07:42</span
+                  >. Walk-in patient
+                  <strong class="text-slate-900">Amir Patel</strong> is
+                  currently waiting at the desk.
+                </p>
+
+                <div
+                  class="flex items-center gap-4 pt-2 text-xs text-slate-500"
+                >
+                  <span class="flex items-center gap-1 font-medium">
+                    📞 Phone: +1 (555) 019-2831
+                  </span>
+                  <span>•</span>
+                  <span class="text-slate-600"
+                    >Action: Call to verify arrival status or process slot
+                    reallocation.</span
+                  >
+                </div>
+              </div>
+
+              <!-- Action Buttons Set -->
+              <div
+                class="flex flex-row md:flex-col gap-2 self-end md:self-center w-full md:w-auto shrink-0 pt-2 md:pt-0"
+              >
+                <button
+                  class="flex-1 md:w-44 rounded-lg bg-amber-600 px-4 py-2 text-center text-xs font-bold text-white shadow-sm hover:bg-amber-700 transition"
+                >
+                  Re-Queue to Walk-In
+                </button>
+                <button
+                  class="flex-1 md:w-44 rounded-lg bg-emerald-600 px-4 py-2 text-center text-xs font-bold text-white shadow-sm hover:bg-emerald-700 transition"
+                >
+                  Mark Checked-In
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- TASK CARD 2: OVERTIME REDIRECTION -->
+          <div
+            class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm relative overflow-hidden"
+          >
+            <div
+              class="flex flex-col md:flex-row md:items-start md:justify-between gap-4"
+            >
+              <div class="space-y-2">
+                <div class="flex flex-wrap items-center gap-2">
+                  <span
+                    class="rounded bg-indigo-50 border border-indigo-100 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-indigo-700"
+                    >Room Balance Recommendation</span
+                  >
+                  <span class="text-xs font-mono text-slate-400"
+                    >Ref: #90448</span
+                  >
+                </div>
+
+                <h3 class="text-lg font-bold text-slate-900">
+                  Redirection Notice: General Medicine Overflow
+                </h3>
+
+                <p class="text-sm text-slate-600 max-w-2xl">
+                  <strong class="text-indigo-600"
+                    >Dr. Rivera (Pediatrics)</strong
+                  >
+                  is running 20 minutes over schedule on the current
+                  consultation.
+                  <strong class="text-indigo-600"
+                    >Dr. Jamie Chen (Room 112)</strong
+                  >
+                  is currently available with no pending waiting pool.
+                </p>
+
+                <div
+                  class="flex items-center gap-2 pt-2 text-xs text-slate-500"
+                >
+                  <span
+                    class="bg-slate-100 border border-slate-200 px-2 py-1 rounded text-slate-700 font-medium"
+                    >Selected Patient: Toby Miller (Walk-In)</span
+                  >
+                  <span>👉</span>
+                  <span class="text-indigo-600 font-semibold"
+                    >Action: Please instruct the patient to proceed to Room 112
+                    instead.</span
+                  >
+                </div>
+              </div>
+
+              <!-- Action Buttons Set -->
+              <div
+                class="flex flex-row md:flex-col gap-2 self-end md:self-center w-full md:w-auto shrink-0 pt-2 md:pt-0"
+              >
+                <button
+                  class="flex-1 md:w-44 rounded-lg bg-indigo-600 px-4 py-2 text-center text-xs font-bold text-white shadow-sm hover:bg-indigo-700 transition"
+                >
+                  Reassign to Dr. Chen
+                </button>
+                <button
+                  class="flex-1 md:w-44 rounded-lg border border-slate-200 bg-white px-4 py-2 text-center text-xs font-bold text-slate-500 hover:bg-slate-50 transition"
+                >
+                  Keep Original Assignment
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>
